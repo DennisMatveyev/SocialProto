@@ -1,6 +1,10 @@
 import * as axios from "axios";
 
 
+const axiosNotesInstance = axios.create({
+    baseURL: `https://react-hooks-1012d.firebaseio.com/`
+});
+
 const axiosInstance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     withCredentials: true,
@@ -44,9 +48,23 @@ const logout = () => {
     return axiosInstance.delete(`auth/login`)
 };
 
+const fetchNotes = () => {
+    return axiosNotesInstance.get(`notes.json`)
+};
+
+const addNote = (title) => {
+    return axiosNotesInstance.post(`notes.json`, {title})
+};
+
+const removeNote = (id) => {
+    return axiosNotesInstance.delete(`notes/${id}.json`)
+};
+
 
 export const profileAPI = { getProfile, getProfileStatus, updateProfileStatus };
 
 export const authAPI = { authenticate, login, logout };
 
 export const usersAPI = { getUsers, follow, unfollow };
+
+export const notesAPI = { fetchNotes, addNote, removeNote };

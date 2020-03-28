@@ -13,6 +13,10 @@ import UsersContainer from "./components/users/UsersContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
 import Login from "./components/login/Login";
 import {initializeApp} from "./redux/app-reducer";
+import NotesPage from "./components/notes/NotesPage";
+import {Alert} from "./components/notes/Alert";
+import {AlertState} from "./context/alert/AlertState";
+import {FirebaseState} from "./context/firebase/FirebaseState";
 
 
 class App extends React.Component {
@@ -26,35 +30,45 @@ class App extends React.Component {
         }
 
         return (
-            <div className='app-wrapper'>
+            /* Firebase and Alert States related to Notes app */
+            <FirebaseState>
+            <AlertState>
+                <div className='app-wrapper'>
 
-                <HeaderContainer/>
+                    <HeaderContainer/>
 
-                <Nav/>
+                    <Nav/>
 
-                <div className='app-wrapper-content'>
+                    <div className='app-wrapper-content'>
+                        <Alert />
 
-                    <Switch>
-                        <Route exact path={'/'}
-                               render={() => <Redirect to={'/profile'} />}
-                        />
-                        <Route path='/dialogs'
-                               render={() => <DialogsContainer/>}
-                        />
-                        <Route path='/profile/:userId?'
-                               render={() => <ProfileContainer/>}
-                        />
-                        <Route path='/users'
-                               render={() => <UsersContainer/>}
-                        />
-                        <Route path='/login'
-                               render={() => <Login/>}
-                        />
-                    </Switch>
+                        <Switch>
+                            <Route exact path={'/'}
+                                   render={() => <Redirect to={'/profile'} />}
+                            />
+                            <Route path='/dialogs'
+                                   render={() => <DialogsContainer/>}
+                            />
+                            <Route path='/profile/:userId?'
+                                   render={() => <ProfileContainer/>}
+                            />
+                            <Route path='/users'
+                                   render={() => <UsersContainer/>}
+                            />
+                            <Route path='/login'
+                                   render={() => <Login/>}
+                            />
+                            /* Notes app implemented in FUNC style with HOOKS */
+                            <Route path='/notes'
+                                   render={() => <NotesPage />}
+                            />
+                        </Switch>
+
+                    </div>
 
                 </div>
-
-            </div>
+            </AlertState>
+            </FirebaseState>
         );
     }
 }
